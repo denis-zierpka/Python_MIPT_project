@@ -5,10 +5,11 @@ class Info:
     display_width = 600
     display_height = 400
 
-    font_style = "comicsansms"
+    font_style = 'comicsansms'
     font_size = 20
 
     clicked_times_info_str = 'Clicked {} times throughout the game'
     money_info_str = 'Money: ${}'
+    auto_clicker_info_str = 'Auto clickers count: {}'
 
     padding_left = 10

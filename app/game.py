@@ -1,7 +1,9 @@
-import pygame
+import time
 from threading import Thread
 from time import sleep
-import time
+
+import pygame
+
 from app.local_info import Info
 
 start_time = 0
@@ -35,7 +37,7 @@ class Game:
         start_time = time.time()
         pygame.init()
         win = pygame.display.set_mode((Info.display_width, Info.display_height))
-        pygame.display.set_caption("Clicker")
+        pygame.display.set_caption('Clicker')
         th = Thread(target=self.update_rate, daemon=True)
         th.start()
 
@@ -49,20 +51,35 @@ class Game:
                 pygame.time.delay(100)
 
                 font = pygame.font.SysFont(Info.font_style, Info.font_size)
-                text = font.render(Info.clicked_times_info_str.format(str(self.count_clicks)), True, text_color)
-                text2 = font.render(Info.money_info_str.format(self.get_money_str()), True, text_color)
+                text_count_clicks = font.render(
+                    Info.clicked_times_info_str.format(str(self.count_clicks)),
+                    True,
+                    text_color,
+                )
+                text_money = font.render(
+                    Info.money_info_str.format(self.get_money_str()), True, text_color
+                )
+                text_auto_clickers = font.render(
+                    Info.auto_clicker_info_str.format(self.count_auto_clicks),
+                    True,
+                    text_color,
+                )
                 win.fill(background_color)
-                win.blit(text, (Info.padding_left, 0))
-                win.blit(text2, (Info.padding_left, Info.font_size + 10))
+                win.blit(text_count_clicks, (Info.padding_left, 0))
+                win.blit(text_money, (Info.padding_left, Info.font_size + 10))
 
                 if self.count_clicks < 100:
                     button = pygame.draw.rect(win, button_color, (20, 100, 150, 150))
                 else:
                     button = pygame.draw.circle(win, button_color, (95, 175), 75)
 
-                button_buy = pygame.draw.rect(win, button_color, (260, 100, 200, 30))
+                win.blit(text_auto_clickers, (260, 100))
+                button_buy = pygame.draw.rect(win, button_color, (260, 130, 230, 30))
 
-                text_new = font.render('buy auto clicker' + str(), True, (255, 255, 255))
+                # add text to button_buy
+                text_new = font.render(
+                    'buy auto clicker' + str(), True, (255, 255, 255)
+                )
                 textRect = text_new.get_rect()
                 textRect.center = button_buy.center
                 win.blit(text_new, textRect)
